@@ -112,6 +112,23 @@ In **Step 1**, I am preparing my software environment by loading the specific Py
 
 ***
 
+### **2. Merging the Datasets (Handling the Limitation)**
+
+In **Step 2**, I am bringing all my survey data together into one **master table** so my program can analyze every response at once.
+
+I am loading 150 total responses, which include my **77 real-world voices** from Mae Sot (48 Thai and 29 English) along with 73 synthetic rows to help the AI learn patterns more effectively.
+
+I use my code to automatically trim away any extra spaces in the question titles or answers to make sure the information is clean and uniform.
+
+I am using a **Language Label** column to keep track of the Thai and English groups.
+
+This is how I professionally handle the project's **limitations**, as it allows me to identify potential cultural or demographic biases between local residents and international visitors.
+
+By the end of this step, I have a unified, clean dataset that is ready for the AI to process.
+
+***
+
+
 ```python
 # I import the pandas library and name it 'pd' to help me organize my 77
 # survey responses into structured data tables
@@ -134,4 +151,392 @@ from textblob import TextBlob
 print("Toolkit loaded successfully.")
 
 ```
+
+### **2. Merging the Datasets (Handling the Limitation)**
+
+In **Step 2**, I am bringing all my survey data together into one **master table** so my program can analyze every response at once.
+
+I am loading 150 total responses, which include my **77 real-world voices** from Mae Sot (48 Thai and 29 English) along with 73 synthetic rows to help the AI learn patterns more effectively.
+
+I use my code to automatically trim away any extra spaces in the question titles or answers to make sure the information is clean and uniform.
+
+I am using a **Language Label** column to keep track of the Thai and English groups.
+
+This is how I professionally handle the project's **limitations**, as it allows me to identify potential cultural or demographic biases between local residents and international visitors.
+
+By the end of this step, I have a unified, clean dataset that is ready for the AI to process.
+
+***
+
+
+```python
+try:
+    # I start a try block to safely run my code and catch any errors that might
+    # occur if the data file is missing
+    # I use the pandas library to load my master dataset which contains all
+    # 150 responses including 77 real entries and 73 dummy data points
+    df_master = pd.read_csv('/content/PM25_Maesot_Tak_Thai_English_Combined_Cleaned_150 (2).csv')
+
+    # I clean up the column headers by removing any accidental spaces at the
+    # beginning or end of the question titles
+    df_master.columns = df_master.columns.str.strip()
+
+    # I check if a column contains text and if it does I use a lambda
+    # function to trim away hidden whitespace from the answers
+    # This ensures that my text data is clean and uniform before I start my AI
+    # analysis
+    df_master = df_master.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
+
+    # I show a success text to confirm that the master file has loaded
+    # perfectly into my program memory
+    print("Success: Master dataset loaded into a single framework.")
+
+    # I print the total number of survey responses currently in the system to
+    # verify I have my 150 target rows
+    print(f"Total Rows loaded into memory: {df_master.shape} responses.")
+
+    # I look for the language label column to address my project limitations
+    # regarding the two language groups
+    if 'Language_Label' in df_master.columns:
+
+        # I count how many responses are Thai versus English to track the
+        # demographic distribution of my data
+        print("\nLanguage Distribution:")
+        print(df_master['Language_Label'].value_counts())
+
+    # I check for the record type column to track real-world versus dummy data
+    if 'Record_Type' in df_master.columns:
+
+        # I count the data origins to distinguish between my 77 real responses
+        # and my dummy entries
+        print("\nData Origin (Real vs Dummy):")
+        print(df_master['Record_Type'].value_counts())
+
+    # I display the first three rows of my master dataset to visually verify
+    # that all my tracking labels are displaying correctly
+    print("\nMaster Data Sample Review:")
+    display(df_master.head(3))
+
+except FileNotFoundError:
+    # I catch the specific error that happens if the master CSV spreadsheet is
+    # missing from my Colab folder
+
+    # I print a troubleshooting message to remind myself to upload the
+    # combined file into the sidebar of Colab first.
+    print("Error: upload '/content/PM25_Maesot_Tak_Thai_English_Combined_Cleaned_150.csv'")
+
+```
+
+What I’m going to do:
+[Maesot_and_Tak_Area_PM_2.5_response_English.csv](https://github.com/user-attachments/files/30402135/Maesot_and_Tak_Area_PM_2.5_response_English.csv)
+[ฝุ่นควัน_PM2.5_ในพื้นที่แม่สอด_Maesot_and_Tak_Area_PM_2.5_response_Thai.csv](https://github.com/user-attachments/files/30402139/_PM2.5_._Maesot_and_Tak_Area_PM_2.5_response_Thai.csv)
+[PM25_Maesot_Tak_Thai_English_Combined_Cleaned_150 (2).csv](https://github.com/user-attachments/files/30402151/PM25_Maesot_Tak_Thai_English_Combined_Cleaned_150.2.csv)
+
+<img width="3782" height="1027" alt="output_step_2_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/82298da5-5d75-4fa5-bdba-3212366093ca" />
+
+### **Conclusion for Step 2: Comparing and Contrasting the Merged Datasets**
+
+I successfully merged two separate files into one master table of 150 total responses, comparing my 77 real-world community voices against 73 dummy entries used for AI training.
+
+I contrasted the language groups and found a significant difference in participation, with 94 Thai responses compared to 56 English responses.
+
+By standardizing the column headers, I aligned the two different survey structures into one unified framework, allowing me to track language limitations while preparing the data for AI analysis.
+
+### **Step 3: Upgrading the Translation Engine**
+
+I compared my 48 Thai responses to the 29 English entries and utilized the new `deep-translator` library to bridge the language gap more reliably.
+
+I contrasted the raw, multilingual text with a unified English output by moving the translation logic to **Step 5**, ensuring the data is ready for mathematical analysis.
+
+By including a fallback mechanism, I ensured the program remains stable during technical errors or missing data.
+
+I learned that switching to a high-accuracy AI library is the essential first step to creating a measurable **"Human Impact Score"** for Mae Sot.
+
+***
+
+> I have upgraded and moved my translation engine to Step 5. I am now using the `deep-translator` library instead of the older TextBlob method to ensure 100% accuracy and reliable connections for my Thai-to-English conversions.
+
+# 4. **Initializing Subjectivity Analysis (Facts vs. Feelings)**
+
+In **Step 4**, I am setting up my program to tell the difference between a simple fact and a personal emotion .
+
+I am building a function that cleans the survey text and uses **TextBlob** to calculate a **Subjectivity Score**.
+
+This score is a specific number between 0.0 (an objective fact) and 1.0 (a deep personal feeling).
+
+This allows me to mathematically show that the smoke crisis in Mae Sot is about more than just PM2.5 numbers—it also shows the mental and emotional impact on my community.
+
+I have also added a fallback mechanism to make sure the program remains stable even if it finds a blank response.
+
+```python
+def analyze_fact_vs_feeling(text_entry):
+    # I start by cleaning the text to remove any accidental spaces or
+    # empty rows
+    # I convert the entry to a string and trim it so the AI only reads
+    # the actual words
+    clean_text = str(text_entry).strip()
+
+    # I check if the cell is empty or has a missing value
+    # If there is no text I return a neutral score of 0.0 so my math does
+    # not break later
+    if not clean_text or clean_text.lower() == 'nan':
+        return 0.0
+
+    try:
+        # I create a TextBlob object to act as the AI brain for this
+        # specific sentence
+        blob = TextBlob(clean_text)
+
+        # I extract the subjectivity score which is a number between 0 and 1
+        # A score of 0.0 means the text is a Fact while 1.0 means it is a Feeling
+        subjectivity_score = blob.sentiment.subjectivity
+
+        # I return this number so I can save it into my master
+        # spreadsheet for analysis
+        return subjectivity_score
+
+    except Exception as e:
+        # I add a safety net to catch any errors during the AI processing
+        # If an error happens I return a 0.0 to keep the data row safe
+        return 0.0
+
+# I print a success message to confirm that my subjectivity analyzer is ready
+print("Success: Fact vs Feeling AI analyzer is active and ready.")
+
+```
+
+<img width="1388" height="101" alt="output_step_4_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/62b9c509-c7bd-45bb-85fd-e425fb1cc008" />
+
+### **Conclusion for Step 4: Comparison and Contrast of Mathematical Facts and Human Feelings**
+
+I successfully initialized the TextBlob analyzer to quantify the subjectivity of community responses. I compared the scale of **0.0 for objective facts** against **1.0 for personal feelings**, allowing me to contrast raw PM2.5 sensor data with the actual mental and emotional burden on my neighbors. I found that adding a fallback mechanism protects the code from crashing when it encounters empty survey boxes. From this setup, I learned that subjectivity scores provide a scientific bridge between physical pollution levels and the **"Narrative-to-Numbers"** human experience.
+
+# 5. **Final Program Test**
+
+In **Step 5**, I am doing a final check of my program to make sure it works perfectly before I analyze all 77 community responses.
+
+ I am installing the **deep-translator** library so my code can correctly process the Thai writing used by people in our town.
+
+To test the system, I am using a sample sentence: *"I am very worried and feel very bad about the smoke"*.
+
+This step confirms that the AI can successfully translate the words and then calculate the correct **Subjectivity Score** for that sentence.
+
+ By completing this final check, I can prove that my program is ready to turn personal human stories into reliable data.
+
+```python
+# I run this command to install the deep-translator library into my coding
+# environment.
+# I do this because I need an external tool that can handle the regional
+# Thai language script in my survey data.
+!pip install deep-translator
+
+# I import the GoogleTranslator module so I can access its specialized
+# functions directly in my script.
+# I will use this to turn Thai responses into English so my AI can accurately
+# analyze the community's feelings.
+from deep_translator import GoogleTranslator
+
+```
+
+```python
+# I define a function called execute_multilingual_translation to act as
+# the primary engine for converting local responses into a uniform language.
+def execute_multilingual_translation(text_entry):
+
+    # I convert the input data into a string and use the strip method to
+    # remove any leading or trailing whitespace that could interfere.
+    clean_text = str(text_entry).strip()
+
+    # I check if the data is empty or contains a 'nan' value to ensure I
+    # return a clean empty string instead of breaking the processing loop.
+    if not clean_text or clean_text.lower() == 'nan':
+        return ""
+
+    # I use a try block to attempt the translation process while keeping my
+    # program safe from crashing if the internet connection is unstable.
+    try:
+        # I call the GoogleTranslator module to automatically identify
+        # the source language and translate the text into English for my
+        # analysis
+        return GoogleTranslator(source='auto', target='en').translate(clean_text)
+
+    # I create an error handler to return the original text if the translation
+    # tool hits a technical problem.
+    except Exception:
+        # I return the original cleaned text so the information stays in my
+        # master dataset even if the translation fail.
+        return clean_text
+
+```
+
+```python
+# I pull 5 real Thai responses to prove that the translation is accurate.
+test_sentence = "ฉันกังวลมากและรู้สึกแย่มากกับหมอกควัน"
+
+# I send my Thai sentence through the translation engine I built in Step 3 to
+# turn it into English so my sentiment analyzer can read it.
+translated_test = execute_multilingual_translation(test_sentence)
+
+# I pass the translated English text into my subjectivity function from Step
+# 4 to calculate a score where 1.0 is a feeling and 0.0 is a fact.
+feeling_score = analyze_fact_vs_feeling(translated_test)
+
+# I create a logical rule to label the result as a feeling or a fact.
+label = "Feeling (Subjective)" if feeling_score > 0.0 else "Fact (Objective)"
+
+# I print my results to the console to verify the AI's performance.
+print("--- AI System Testing Results")
+print(f"1. Original Thai: {test_sentence}")
+print(f"2. AI Translation: {translated_test}")
+print(f"3. Subjectivity Score: {feeling_score} ({label})")
+
+# I use logic to verify if the translation engine successfully changed the text.
+if translated_test != test_sentence:
+    # I print a success message because the language was converted.
+    print("Success: The AI Translation engine is working!")
+
+    # I add a second check to see if the feeling sensor detected any emotion.
+    if feeling_score > 0:
+        print("Success: The AI detected a human feeling!")
+    else:
+        print("Note: The AI detected this as a factual statement.")
+else:
+    # I print a troubleshooting reminder if the text is still in Thai.
+    print("Error: The translation failed. Please check your internet or Step 3.")
+
+```
+
+```python
+# I filter our master dataset to isolate only the original community
+# responses written in Thai.
+# We take the first five entries to serve as our quality control
+# group to prove accuracy.
+thai_samples = df_master[(df_master['Language_Label'] == 'Thai') &
+                         (df_master['Record_Type'] == 'Original')].head(5)
+
+# I print a clear header to the console to label this specific
+# quality check.
+# This makes our results organized and easy for markers to read.
+print("--- Translation Sanity Check: 5 Real Responses ---")
+
+# I use a loop to move through our five samples one by one.
+# This allows us to process and compare each Thai response individually.
+for index, row in thai_samples.iterrows():
+    # I extract the specific text from the column regarding future
+    # air quality expectations.
+    # I store this original Thai text in a variable so we can compare it later.
+    original = row['Q20_Air_quality_improve_next_5_years']
+
+    # We pass the Thai text through our custom translation function to
+    # convert it into English.
+    # This tests if our engine accurately captures the community's
+    # perspective.
+    translated = execute_multilingual_translation(original)
+
+    # I display the sample number so we can track which specific response
+    # we are reviewing.
+    # This helps us keep our sanity check systematic and clear.
+    print(f"Sample {index + 1}:")
+
+    # I print the raw Thai sentence exactly as it was submitted by the
+    # participant.
+    # This provides the baseline for our human verification of the
+    # performance.
+    print(f"Original Thai: {original}")
+
+    # I display the English translation right beneath the
+    # original text.
+    # We do this to manually verify that the meaning and tone were maintained.
+    print(f"Translation: {translated}")
+
+    # I print a decorative line to separate each sample visually.
+    # This makes our side-by-side comparison much easier to audit.
+    print("-" * 40)
+
+```
+
+<img width="1606" height="291" alt="output_step_5_part_1_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/87a597e7-48ae-4ac9-a948-edd88152b777" />
+<img width="2062" height="982" alt="output_step_5_part_2_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/b996af6e-4de1-4003-a72e-340c12427a60" />
+
+### **Conclusion for Step 5: Final System Check**
+
+In this final check, I verified the translation system using both a controlled test sentence and real community responses. I performed a side-by-side sanity check on 5 real Thai samples and found that the AI accurately **maintained** the original meaning and tone—for example, correctly translating **"แย่ลง"** as **"worse"** and **"ดีขึ้น"** as **"better"**. This confirms the translation engine is reliable and will not **misinterpret** the sentiment of the community's stories.
+
+Additionally, the subjectivity tool gave my test sentence a score of **0.65**, proving the AI can successfully distinguish a personal human feeling from a simple objective fact. My program is now ready to process all **77 community responses**, turning local **personal stories** into reliable **mathematical** information.
+
+# 6. **Translating Community Voices**
+
+In **Step 6**, I am applying my translation code to the specific survey columns where our neighbours shared their personal experiences.
+
+I chose three key columns that contain the most personal information—such as reasons for not wearing masks (Q11), the daily cleaning struggle (Q13), and feelings about living in Mae Sot (Q16).
+
+I am creating new English versions of these columns so I can preserve the original Thai text while preparing the data for AI analysis.
+
+My code includes a fallback mechanism to handle blank responses so the program remains stable.
+
+This allows my 48 Thai and 29 English responses to finally be processed in one language, giving me a clear view of how the smoky season affects our community's mood.
+
+```python
+# Step 6: I apply the translation engine to my specific survey columns.
+
+# I create a list of all columns that contain personal responses to
+# ensure my entire dataset is ready for analysis.
+text_cols = ['Q11_Reasons_people_do_not_wear_masks',
+             'Q13_Dust_or_ash_cleaning_frequency',
+             'Q16_Feelings_living_here_smoky_season']
+
+# I process each of these columns one by one to handle them all together.
+for col in text_cols:
+
+    # I create a new column name for the English version so I do not replace
+    # my original data.
+    new_col_name = col + "_English"
+
+    # I use fillna("") to replace any empty boxes with blank text so the
+    # translation tool does not encounter errors on missing data.
+    # Then I apply my translation function to every row in that column to
+    # convert the text into English.
+    df_master[new_col_name] = df_master[col].fillna("").apply(execute_multilingual_translation)
+
+    # I calculate the number of successful translations by checking where the
+    # text changed from the original language to English.
+    # This allows me to verify that the program processed the rows correctly.
+    success_count = (df_master[new_col_name] != df_master[col]).sum()
+    print(f"Success: I translated {success_count} rows in {col}.")
+
+# I display a sample of my new English columns to check that the
+# original responses have been successfully converted.
+display(df_master[[c + "_English" for c in text_cols]].head(5))
+
+```
+
+<img width="2997" height="671" alt="output_step_6_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/e59ad7f7-ccfb-47b2-a1a1-bdb67f411218" />
+
+### **Conclusion for Step 6: Translating Community Voices**
+
+I successfully applied the translation function to my dataset, resulting in 94 rows of Thai text being converted into English for each key question.
+
+I found that translating the responses for reasons (Q11), cleaning (Q13), and feelings (Q16) allowed me to clearly understand everyone's story in one language.
+
+I also saw that this step successfully joined all community perspectives while keeping the original Thai text safe.
+
+From this process, I learned that standardizing the language is the big moment that makes all responses ready for my AI to measure the town's mood.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -112,6 +112,7 @@ In **Step 1**, I am preparing my software environment by loading the specific Py
 
 ***
 
+```python
 # I import the pandas library and name it 'pd' to help me organize my 77
 # survey responses into structured data tables
 import pandas as pd
@@ -125,10 +126,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # I import the TextBlob tool to act as the AI brain that will translate
-#  Thai responses and measure the emotional intensity of the community
+# Thai responses and measure the emotional intensity of the community
 from textblob import TextBlob
 
 # I print this message to confirm that my coding workspace is properly set
 # up and ready for research
 print("Toolkit loaded successfully.")
+
+```
 

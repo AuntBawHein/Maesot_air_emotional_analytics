@@ -464,6 +464,7 @@ for index, row in thai_samples.iterrows():
 ```
 
 <img width="1606" height="291" alt="output_step_5_part_1_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/87a597e7-48ae-4ac9-a948-edd88152b777" />
+
 <img width="2062" height="982" alt="output_step_5_part_2_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/b996af6e-4de1-4003-a72e-340c12427a60" />
 
 ### **Conclusion for Step 5: Final System Check**
@@ -885,7 +886,9 @@ print(f"Real Human Responses Analyzed: 77")
 ```
 
 <img width="1846" height="717" alt="output_step_9_chart_1_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/f76254f4-3800-421e-8bf2-627580188366" />
+
 <img width="2581" height="978" alt="output_step_9_chart_2_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/de600aef-25de-4661-a8d6-59606249994a" />
+
 <img width="1607" height="152" alt="output_step_9_3_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/82bae3d6-1f11-4171-b320-16926715646b" />
 
 ### **Conclusion for Step 9: Creating Data Visualizations**
@@ -991,6 +994,7 @@ plt.show()
 ```
 
 <img width="1617" height="972" alt="output_step_10_chart_1_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/b2b7722a-f315-4b91-9eeb-16205c181590" />
+
 <img width="1623" height="932" alt="output_step_10_chart_2_maesot_air_emotional_analytics" src="https://github.com/user-attachments/assets/98ecdce7-8f8e-4739-8f5e-a946ec5d8948" />
 
 ### **Conclusion for Step 10: Finalizing Results — Atmospheric Correlation (Compare and Contrast)**
